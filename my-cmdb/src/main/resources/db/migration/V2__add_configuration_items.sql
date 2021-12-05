@@ -1,0 +1,2 @@
+INSERT INTO CONFIGURATION_ITEMS (ID, CI_NAME, AVAILABILITY_R, INTEGRITY_R, CONFIDENTIALITY_R, SYSTEM_OWNER, TEAM_EMAIL) VALUES
+  ('10fe8faf-65c3-418c-aae8-2cb57f0183e7', 'backstage', '3', '3', '2', 'Alan Turing', 'alan.turing@gmail.com');

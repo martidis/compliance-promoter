@@ -1,0 +1,64 @@
+version: "3.7"
+services:
+  mycmdb-grafana:
+    image: mygrafana
+    container_name: 'mycmdb-grafana'
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./grafana/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./grafana/dashboards/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
+      - ./grafana/dashboards/MyCMDB.json:/etc/grafana/provisioning/dashboards/MyCMDB.json
+      - ./grafana-data:/var/lib/grafana
+    depends_on:
+      - "mycmdb-prometheus"
+    command: [ "./wait-for-it.sh", "prometheus:9090" ]
+    networks:
+      - monitoring
+#    environment:
+#      - GF_SECURITY_ADMIN_USER=admin
+#      - GF_SECURITY_ADMIN_PASSWORD=admin
+  mycmdb-prometheus:
+    image: myprometheus
+    container_name: 'mycmdb-prometheus'
+#    restart: always
+    ports:
+      - 9090:9090
+    networks:
+      - monitoring
+  mycmdb-database:
+      image: mydb
+      container_name: 'mycmdb-postgres'
+#      restart: always
+      ports:
+        - "5432:5432"
+      networks:
+        - storage
+  mycmdb:
+      image: mycmdb
+      container_name: 'mycmdb'
+#      restart: "always"
+      ports:
+        - "8443:8443"
+      depends_on:
+        - "mycmdb-database"
+        - "mycmdb-hazelcast"
+      command: ["./wait-for-it.sh", "database:5432", "./wait-for-it.sh", "hazelcast:5701"]
+      networks:
+        - monitoring
+        - storage
+  mycmdb-hazelcast:
+      image: myhazelcast
+      container_name: 'mycmdb-hazelcast'
+#      restart: always
+      ports:
+        - "5701:5701"
+      environment:
+        - HZ_NETWORK_RESTAPI_ENABLED=true
+      networks:
+        - storage
+networks:
+  monitoring:
+  storage:
+volumes:
+  grafana-data: {}

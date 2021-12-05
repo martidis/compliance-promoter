@@ -1,0 +1,5 @@
+CREATE TABLE clients (
+  id SERIAL  PRIMARY KEY,
+  username VARCHAR(250) NOT NULL,
+  role VARCHAR(250) DEFAULT NULL
+);
