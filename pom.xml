@@ -12,7 +12,7 @@
 		</parent>
 
 	<groupId>com.tasosmartidis</groupId>
-	<artifactId>we-would-like-to-see-some-code</artifactId>
+	<artifactId>compliance-promoter</artifactId>
 	<version>0.1</version>
 	<packaging>pom</packaging>
 
