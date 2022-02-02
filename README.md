@@ -50,6 +50,8 @@ A picture is worth a thousand words I hear, so maybe an image of the ecosystem c
 
 ### Small demo of the application
 
+(Demo goes fast, due to limitation of the video file size for README)
+
 https://user-images.githubusercontent.com/9349267/152243204-bcbcc142-174c-41b3-9619-2f86b0554d76.mp4
 
 
