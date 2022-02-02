@@ -49,7 +49,10 @@ A picture is worth a thousand words I hear, so maybe an image of the ecosystem c
 ![system-design](docs/architecture-diagrams/system-design.png)
 
 ### Small demo of the application
-Place video here
+
+https://user-images.githubusercontent.com/9349267/152243204-bcbcc142-174c-41b3-9619-2f86b0554d76.mp4
+
+
 
 ### Implementation includes
 * Monitoring with Prometheus and Grafana
