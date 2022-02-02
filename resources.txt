@@ -34,3 +34,14 @@ https://stackoverflow.com/questions/55072221/deploying-postgresql-docker-with-ss
 https://www.baeldung.com/spring-bucket4j
 https://github.com/vladimir-bukhtoyarov/bucket4j
 https://golb.hplar.ch/2019/08/rate-limit-bucket4j.html
+https://getbootstrap.com/docs/4.0/examples/
+https://getbootstrap.com/docs/4.0/examples/dashboard/#
+https://getbootstrap.com/docs/4.0/examples/checkout/
+https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_temp_analytics&stacked=h
+https://mdbootstrap.com/docs/b4/jquery/javascript/charts/
+https://www.srihash.org/
+https://github.com/startbootstrap/startbootstrap-sb-admin-2
+https://stackoverflow.com/questions/7603500/how-to-map-postgresql-enum-with-jpa-and-hibernate
+https://docs.linuxserver.io/images/docker-firefox
+https://docs.linuxserver.io/images/docker-firefox
+https://github.com/jlesage/docker-firefox

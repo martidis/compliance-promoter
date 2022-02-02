@@ -9,9 +9,9 @@ public class Test {
 
 	static
 	{
-		System.setProperty("javax.net.ssl.trustStore", "/Users/tasos/dev/we-would-like-to-see-some-code/my-cmdb/src/main/resources/certs/compliance-bar.jks");
+		System.setProperty("javax.net.ssl.trustStore", "/Users/tasos/dev/compliance-promoter/compliance-bar/src/main/resources/certs/compliance-bar.jks");
 		System.setProperty("javax.net.ssl.trustStorePassword", KEYSTORE_PASSWORD);
-		System.setProperty("javax.net.ssl.keyStore", "/Users/tasos/dev/we-would-like-to-see-some-code/my-cmdb/src/main/resources/certs/compliance-bar.jks");
+		System.setProperty("javax.net.ssl.keyStore", "/Users/tasos/dev/compliance-promoter/compliance-bar/src/main/resources/certs/compliance-bar.jks");
 		System.setProperty("javax.net.ssl.keyStorePassword", KEYSTORE_PASSWORD);
 
 		javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(

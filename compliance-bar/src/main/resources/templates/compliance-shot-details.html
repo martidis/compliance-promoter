@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head :: head('Compliance Bar - Compliance Shot')"></head>
+
+<body id="page-top">
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <div th:replace="fragments/topbar :: topbar(${user})"></div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-8 col-lg-7">
+                        <!-- Area Chart -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Compliance Shot Details</h6>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-borderless align-top">
+                                    <tr>
+                                        <td><b>Title</b></td>
+                                        <td><span th:text="${complianceShotDetailsView.complianceShotDetails.complianceShot.title}"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Min AIC Rating</b></td>
+                                        <td th:text="|${complianceShotDetailsView.complianceShotDetails.complianceShot.minAvailabilityRating}${complianceShotDetailsView.complianceShotDetails.complianceShot.minIntegrityRating}${complianceShotDetailsView.complianceShotDetails.complianceShot.minConfidentialityRating}|"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Reference Url</b></td>
+                                        <td><a th:href="${complianceShotDetailsView.complianceShotDetails.complianceShot.referenceUrl}"><span
+                                                th:text="${complianceShotDetailsView.complianceShotDetails.complianceShot.referenceUrl}"></span></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Tutorial Url</b></td>
+                                        <td><a th:href="${complianceShotDetailsView.complianceShotDetails.complianceShot.tutorialUrl}"><span
+                                                th:text="${complianceShotDetailsView.complianceShotDetails.complianceShot.tutorialUrl}"></span></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Description</b></td>
+                                        <td th:text="${complianceShotDetailsView.complianceShotDetails.complianceShot.shortDescription}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Created by</b></td>
+                                        <td th:text="${complianceShotDetailsView.complianceShotDetails.complianceShot.createdBy}"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="card shadow">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Configuration Items Progress</h6>
+                            </div>
+                        </div>
+                        <div class="card border-left-primary shadow mb-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <span th:text="${complianceShotDetailsView.complianceShotDetails.getApplicableConfigurationItems().size()}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card border-left-success shadow mb-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Completed</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <span th:text="${complianceShotDetailsView.progressDetails.completed}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card border-left-warning shadow mb-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">In progress</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <span th:text="${complianceShotDetailsView.progressDetails.inProgress}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card border-left-secondary shadow mb-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Cancelled</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <span th:text="${complianceShotDetailsView.progressDetails.cancelled}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Applicable Configuration Items</h6>
+                        </div>
+                    </div>
+                    <table class="table table-hover table-bordered bg-white">
+                        <thead>
+                        <tr>
+                            <th scope="col">CI Name</th>
+                            <th scope="col">System Owner</th>
+                            <th scope="col">Team Email</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" th:each="ci : ${complianceShotDetailsView.complianceShotDetails.applicableConfigurationItems}">
+                            <td th:text="${ci.configurationItem.configurationItemName}"/>
+                            <td th:text="${ci.configurationItem.systemOwner}"/>
+                            <td th:text="${ci.configurationItem.teamEmail}"/>
+                            <td th:if="${#strings.equals(ci.status,'COMPLETED')}" class="text-success"
+                                th:text="${ci.status}"/>
+                            <td th:if="${#strings.equals(ci.status,'CREATED') || #strings.equals(ci.status,'SUBMITTED')}"
+                                class="text-warning" th:text="${ci.status}"/>
+                            <td th:if="${#strings.equals(ci.status,'CANCELLED')}" class="text-secondary"
+                                th:text="${ci.status}"/>
+                            <td><a th:href="@{/configuration-items/{id}(id=${ci.configurationItem.id})}"><i class="fas fa-fw fa-arrow-right"></i></a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button type="button" class="btn btn-link">
+                    <a href="javascript:window.history.back();">Back</a>
+                </button>
+
+<!--                <button type="button" class="btn btn-link float-right">-->
+<!--                    <a href="#" class="text-danger">Delete</a>-->
+<!--                </button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div th:replace="fragments/logout :: logout"></div>
+
+
+<!-- scripts -->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="/js/sb-admin-2.min.js"></script>
+
+</body>
+</html>

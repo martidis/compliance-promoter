@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head :: head('Compliance Bar - Compliance Shots')"></head>
+<body id="page-top">
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+
+            <!-- Topbar -->
+            <div th:replace="fragments/topbar :: topbar(${user})"></div>
+
+            <div class="container-fluid">
+                <h1 class="h3 mb-4 text-gray-800">Compliance shots</h1>
+
+                <table class="table table-hover table-bordered bg-white mb-4">
+                    <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Min AIC Rating</th>
+                        <th scope="col">Details</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr scope="row" th:each="s : ${complianceShotsView.complianceShots}">
+                        <td th:text="${s.title}">
+                        </td>
+                        <td th:text="${s.shortDescription}"/>
+                        <td th:text="|${s.minAvailabilityRating}${s.minIntegrityRating}${s.minConfidentialityRating}|"/>
+                        <td>
+                            <a th:href="@{/compliance-shots/{id}(id=${s.id})}"><i class="fas fa-fw fa-arrow-right"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <button type="button" class="btn btn-link">
+                    <a href="javascript:window.history.back();">Back</a>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div th:replace="fragments/logout :: logout"></div>
+
+<!-- scripts -->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="/js/sb-admin-2.min.js"></script>
+
+</body>
+</html>

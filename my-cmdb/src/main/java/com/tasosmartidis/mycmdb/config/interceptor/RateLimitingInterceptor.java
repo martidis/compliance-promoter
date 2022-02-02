@@ -1,7 +1,7 @@
 package com.tasosmartidis.mycmdb.config.interceptor;
 
-import com.tasosmartidis.mycmdb.core.model.exception.TooManyRequestsException;
-import com.tasosmartidis.mycmdb.core.service.RateLimitingService;
+import com.tasosmartidis.mycmdb.features.core.model.exception.TooManyRequestsException;
+import com.tasosmartidis.mycmdb.features.core.service.RateLimitingService;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.ConsumptionProbe;
 import lombok.AllArgsConstructor;

@@ -3,9 +3,9 @@ package com.tasosmartidis.mycmdb;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.tasosmartidis.mycmdb.core.model.api.ConfigurationItemRequest;
-import com.tasosmartidis.mycmdb.core.model.api.ConfigurationItemResponse;
-import com.tasosmartidis.mycmdb.core.model.entity.ConfigurationItemEntity;
+import com.tasosmartidis.mycmdb.features.core.model.api.ConfigurationItemRequest;
+import com.tasosmartidis.mycmdb.features.core.model.api.ConfigurationItemResponse;
+import com.tasosmartidis.mycmdb.features.core.model.entity.ConfigurationItemEntity;
 
 public class TestUtils {
 	private static final ObjectWriter OBJECT_WRITTER;

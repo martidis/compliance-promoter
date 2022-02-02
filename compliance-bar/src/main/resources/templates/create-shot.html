@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<head th:replace="fragments/head :: head('Compliance Bar - Shot Creation')"></head>
+<body id="page-top">
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <div id="content">
+
+            <!-- Topbar -->
+            <div th:replace="fragments/topbar :: topbar(${user})"></div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div th:if="${message}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <span th:text="${message}"></span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <h1 class="h3 mb-4 text-gray-800">Create compliance shot</h1>
+
+                <form th:action="@{/compliance-shots/requests}" th:object="${complianceShot}" method="post" class="mb-4">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" th:field="*{title}"
+                               placeholder="Enter title">
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('title')}"
+                             th:errors="*{title}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" th:field="*{shortDescription}" rows="3"
+                                  maxlength="280"></textarea>
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('shortDescription')}"
+                             th:errors="*{shortDescription}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ar">Minimum Availability Rating</label>
+                        <select class="form-control" id="ar" th:field="*{minAvailabilityRating}">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ir">Minimum Inegrity Rating</label>
+                        <select class="form-control" id="ir" th:field="*{minIntegrityRating}">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cr">Minimum Confidentiality Rating</label>
+                        <select class="form-control" id="cr" th:field="*{minConfidentialityRating}">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="referenceUrl">Reference Url</label>
+                        <input type="text" class="form-control" id="referenceUrl" th:field="*{referenceUrl}"
+                               placeholder="Enter the reference url">
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('referenceUrl')}"
+                             th:errors="*{referenceUrl}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tutorialUrl">Tutorial Url</label>
+                        <input type="text" class="form-control" id="tutorialUrl" th:field="*{tutorialUrl}"
+                               placeholder="Enter the tutorial url">
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('tutorialUrl')}"
+                             th:errors="*{tutorialUrl}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cr">Compliance Level</label>
+                        <select class="form-control" id="complianceLevel" th:field="*{complianceLevel}">
+                            <option value="BLOCKING">BLOCKING</option>
+                            <option value="NON_BLOCKING">NON BLOCKING</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Next</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div th:replace="fragments/logout :: logout"></div>
+
+<!-- scripts -->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="/js/sb-admin-2.min.js"></script>
+
+</body>
+</html>

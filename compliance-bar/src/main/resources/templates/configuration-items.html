@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head :: head('Compliance Bar - Configuration Items')"></head>
+
+<body id="page-top">
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+
+            <!-- Topbar -->
+            <div th:replace="fragments/topbar :: topbar(${user})"></div>
+
+            <div class="container-fluid">
+                <h1 class="h3 mb-4 text-gray-800">Configuration Items</h1>
+
+                <table class="table table-hover table-bordered bg-white mb-4">
+                    <thead>
+                    <tr>
+                        <th scope="col">CI Name</th>
+                        <th scope="col">System Owner</th>
+                        <th scope="col">Team Email</th>
+                        <th scope="col">CMDB Origin</th>
+                        <th scope="col">Shots Overview</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr scope="row" th:each="ci : ${configurationItemsView.configurationItems}">
+                        <td th:text="${ci.configurationItemName}"/>
+                        <td th:text="${ci.systemOwner}"/>
+                        <td th:text="${ci.teamEmail}"/>
+                        <td th:text="${ci.externalCMDBName}"/>
+                        <td><a th:href="@{/configuration-items/{id}(id=${ci.id})}"><i
+                                class="fas fa-fw fa-arrow-right"></i></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <button type="button" class="btn btn-link">
+                    <a href="javascript:window.history.back();">Back</a>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div th:replace="fragments/logout :: logout"></div>
+
+<!-- script-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="/js/sb-admin-2.min.js"></script>
+
+</body>
+</html>

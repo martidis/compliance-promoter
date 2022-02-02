@@ -1,64 +1,121 @@
 version: "3.7"
 services:
+  compliance-bar-hazelcast:
+    image: martidis/myhazelcast
+    container_name: 'compliance-bar-hazelcast'
+    #      restart: always
+    ports:
+      - "6701:5701"
+    environment:
+      - HZ_NETWORK_RESTAPI_ENABLED=true
+    networks:
+      - compliance-bar-storage
+  mycmdb-hazelcast:
+    image: martidis/myhazelcast
+    container_name: 'mycmdb-hazelcast'
+    #      restart: always
+    ports:
+      - "5701:5701"
+    environment:
+      - HZ_NETWORK_RESTAPI_ENABLED=true
+    networks:
+      - storage
+  mycmdb-database:
+    image: martidis/mycmdb-db
+    container_name: 'mycmdb-postgres'
+    #      restart: always
+    ports:
+      - "5432:5432"
+    networks:
+      - storage
   mycmdb-grafana:
-    image: mygrafana
+    image: martidis/mycmdb-grafana
     container_name: 'mycmdb-grafana'
     ports:
       - '3000:3000'
     volumes:
-      - ./grafana/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
-      - ./grafana/dashboards/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
-      - ./grafana/dashboards/MyCMDB.json:/etc/grafana/provisioning/dashboards/MyCMDB.json
-      - ./grafana-data:/var/lib/grafana
+      - ./mycmdb-grafana/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./mycmdb-grafana/dashboards/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
+      - ./mycmdb-grafana/dashboards/MyCMDB.json:/etc/grafana/provisioning/dashboards/MyCMDB.json
+      - ./mycmdb-grafana-data:/var/lib/grafana
     depends_on:
       - "mycmdb-prometheus"
-    command: [ "./wait-for-it.sh", "prometheus:9090" ]
+    command: [ "./wait-for-it.sh", "mycmdb-prometheus:9090" ]
     networks:
       - monitoring
-#    environment:
-#      - GF_SECURITY_ADMIN_USER=admin
-#      - GF_SECURITY_ADMIN_PASSWORD=admin
   mycmdb-prometheus:
-    image: myprometheus
+    image: martidis/mycmdb-prometheus
     container_name: 'mycmdb-prometheus'
-#    restart: always
+    #    restart: always
     ports:
       - 9090:9090
     networks:
       - monitoring
-  mycmdb-database:
-      image: mydb
-      container_name: 'mycmdb-postgres'
-#      restart: always
-      ports:
-        - "5432:5432"
-      networks:
-        - storage
+  compliance-bar-database:
+    image: martidis/compliance-bar-db
+    container_name: 'compliance-bar-postgres'
+    #      restart: always
+    ports:
+      - "5543:5432"
+    networks:
+      - compliance-bar-storage
+  compliance-bar-prometheus:
+    image: martidis/compliance-bar-prometheus
+    container_name: 'compliance-bar-prometheus'
+    #    restart: always
+    ports:
+      - 9091:9090
+    networks:
+      - compliance-bar-monitoring
+  compliance-bar-grafana:
+    image: martidis/compliance-bar-grafana
+    container_name: 'compliance-bar-grafana'
+    ports:
+      - '4000:3000'
+    volumes:
+      - ./compliance-bar-grafana/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./compliance-bar-grafana/dashboards/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
+      - ./compliance-bar-grafana/dashboards/Compliance-Bar.json:/etc/grafana/provisioning/dashboards/Compliance-Bar.json
+      - ./compliance-bar-grafana-data:/var/lib/grafana
+    depends_on:
+      - "compliance-bar-prometheus"
+    command: [ "./wait-for-it.sh", "compliance-bar-prometheus:9090" ]
+    networks:
+      - compliance-bar-monitoring
   mycmdb:
-      image: mycmdb
-      container_name: 'mycmdb'
-#      restart: "always"
-      ports:
-        - "8443:8443"
-      depends_on:
-        - "mycmdb-database"
-        - "mycmdb-hazelcast"
-      command: ["./wait-for-it.sh", "database:5432", "./wait-for-it.sh", "hazelcast:5701"]
-      networks:
-        - monitoring
-        - storage
-  mycmdb-hazelcast:
-      image: myhazelcast
-      container_name: 'mycmdb-hazelcast'
-#      restart: always
-      ports:
-        - "5701:5701"
-      environment:
-        - HZ_NETWORK_RESTAPI_ENABLED=true
-      networks:
-        - storage
+    image: martidis/mycmdb
+    container_name: 'mycmdb'
+    #      restart: "always"
+    ports:
+      - "8443:8443"
+    depends_on:
+      - "mycmdb-database"
+      - "mycmdb-hazelcast"
+    command: [ "./wait-for-it.sh", "mycmdb-postgres:5432", "./wait-for-it.sh", "mycmdb-hazelcast:5701" ]
+    networks:
+      - monitoring
+      - storage
+      - app2appnet
+  compliance-bar:
+    image: martidis/compliance-bar
+    container_name: 'compliance-bar'
+    #      restart: "always"
+    ports:
+      - "9000:9000"
+    depends_on:
+      - "compliance-bar-database"
+      - "compliance-bar-hazelcast"
+    command: [ "./wait-for-it.sh", "compliance-bar-postgres:5543", "./wait-for-it.sh", "compliance-bar-hazelcast:5701" ]
+    networks:
+      - compliance-bar-storage
+      - app2appnet
+      - compliance-bar-monitoring
 networks:
   monitoring:
   storage:
+  compliance-bar-storage:
+  app2appnet:
+  compliance-bar-monitoring:
 volumes:
-  grafana-data: {}
+  compliance-bar-grafana-data: { }
+  mycmdb-grafana-data: { }

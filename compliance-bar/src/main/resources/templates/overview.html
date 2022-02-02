@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/head :: head('Compliance Bar - Dashboard')"></head>
+
+<body id="page-top">
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <!-- Topbar -->
+            <div th:replace="fragments/topbar :: topbar(${user})"></div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+                            <span th:text="${message}"></span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Total Compliance Shots -->
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Compliance Shots
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <p th:text="${overview.numberOfComplianceShots}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-tasks fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Completed -->
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Teams
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <p th:text="${overview.numberOfTeams}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- In progress -->
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                            Configuration Items
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <p th:text="${overview.numberOfConfigurationItems}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-sitemap fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Pie Chart -->
+                    <div class="col-12">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Compliance shots</h6>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-pie pt-4 pb-2">
+                                    <canvas id="shotsPieChart"></canvas>
+                                </div>
+                                <div class="mt-4 text-center small">
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-secondary"></i> Cancelled
+                                        </span>
+                                    <span class="mr-2">
+                                            <i class="fas fa-circle text-warning"></i> In progress
+                                        </span>
+                                    <span class="mr-2">
+                                            <i class="fas fa-circle text-success"></i> Completed
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Content Row -->
+                <div class="row">
+                    <!-- Content Column -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card shadow mb-2">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary"><a th:href="@{/compliance-shots}">Compliance
+                                    Shots</a></h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-left mb-4">
+                                    <ul th:each="shot : ${overview.complianceShots}"
+                                        class="list-group list-group-flush">
+                                        <li class="list-group-item" th:text="${shot.title}"></li>
+                                        <hr style="margin:0"/>
+                                    </ul>
+                                </div>
+
+                                <a th:href="@{/compliance-shots}">Browse Compliance Shots &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card shadow mb-2">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary"><a th:href="@{/configuration-items}">Configuration
+                                    Items</a></h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-left mb-4">
+                                    <ul th:each="item : ${overview.configurationItems}"
+                                        class="list-group list-group-flush">
+                                        <li class="list-group-item" th:text="${item.configurationItemName}"></li>
+                                        <hr style="margin:0"/>
+                                    </ul>
+                                </div>
+
+                                <a th:href="@{/configuration-items}">Browse Configuration Items &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div th:replace="fragments/logout :: logout"></div>
+</div>
+
+
+<!-- scripts -->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="/js/sb-admin-2.min.js"></script>
+<script src="/vendor/chart.js/Chart.min.js"></script>
+
+<script>
+    Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor = '#858796';
+
+    var cancelled = [[${overview.progressDetails.cancelled}]]
+    var inProgress = [[${overview.progressDetails.inProgress}]]
+    var completed = [[${overview.progressDetails.completed}]]
+
+    // Pie Chart Example
+    var ctx = document.getElementById("shotsPieChart");
+    var shotsPieChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Cancelled", "Completed", "In Progress"],
+            datasets: [{
+                data: [cancelled, completed, inProgress],
+                backgroundColor: ['#6c757d', '#5cb85c', '#f0ad4e'],
+                hoverBackgroundColor: ['#2c333a', '#1abd1a', '#ea9011'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+            },
+            legend: {
+                display: false
+            },
+            cutoutPercentage: 80,
+        },
+    });
+</script>
+
+</body>
+
+</html>

@@ -1,6 +1,6 @@
 package com.tasosmartidis.mycmdb.config;
 
-import com.tasosmartidis.mycmdb.iam.ClientsService;
+import com.tasosmartidis.mycmdb.features.iam.ClientsService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	protected void configure(AuthenticationManagerBuilder auth) {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 		authProvider.setUserDetailsService(clientsService);
 		auth.authenticationProvider(authProvider);

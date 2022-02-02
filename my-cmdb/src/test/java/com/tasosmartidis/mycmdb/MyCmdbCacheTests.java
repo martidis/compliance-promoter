@@ -1,7 +1,7 @@
 package com.tasosmartidis.mycmdb;
 
-import com.tasosmartidis.mycmdb.core.model.api.ConfigurationItemResponse;
-import com.tasosmartidis.mycmdb.core.repository.ConfigurationItemsRepository;
+import com.tasosmartidis.mycmdb.features.core.model.api.ConfigurationItemResponse;
+import com.tasosmartidis.mycmdb.features.core.repository.ConfigurationItemsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -24,7 +24,7 @@ public class TestConfig {
 	public RestTemplate rt() throws Exception {
 		char[] password = "password".toCharArray();
 		SSLContext sslContext = SSLContextBuilder.create()
-				.loadKeyMaterial(keyStore("classpath:certs/compliance-bar.jks", password), password)
+				.loadKeyMaterial(keyStore("classpath:compliance-bar.jks", password), password)
 				.loadTrustMaterial(null, new TrustSelfSignedStrategy()).build();
 		HttpClient client = HttpClients.custom().setSSLContext(sslContext).build();
 

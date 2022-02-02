@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import static com.tasosmartidis.mycmdb.core.service.RateLimitingService.RATE_LIMIT_MAP_NAME;
+import static com.tasosmartidis.mycmdb.features.core.service.RateLimitingService.RATE_LIMIT_MAP_NAME;
 
 @Configuration
 @Profile({"local"})
